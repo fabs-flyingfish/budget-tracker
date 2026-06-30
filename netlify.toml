@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[dev]
+  command = "npm run dev"
+  port = 8888
+
+
+# Scheduled function — runs daily at 9am, checks each user's saved send day internally
+[[scheduled_functions]]
+  name = "send-budget-email"
+  schedule = "0 9 * * *"
