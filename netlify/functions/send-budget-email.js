@@ -72,11 +72,11 @@ const handler = async (event) => {
     // 4. Build email HTML
     const billRows = activeBills.map(b => `
       <tr>
-        <td style="padding: 10px 0; border-bottom: 1px solid #2a2455; font-size: 15px;">
+        <td style="padding: 10px 0; border-bottom: 1px solid #2a2455; font-size: 15px; color: #fff;">
           ${b.emoji} ${b.name}
           ${b.note ? `<br><span style="font-size: 12px; color: #a78bfa;">📝 ${b.note}</span>` : ''}
         </td>
-        <td style="padding: 10px 0; border-bottom: 1px solid #2a2455; text-align: right; font-weight: 700; font-size: 15px;">
+        <td style="padding: 10px 0; border-bottom: 1px solid #2a2455; text-align: right; font-weight: 700; font-size: 15px; color: #fff;">
           £${parseFloat(b.amount).toFixed(2)}
         </td>
       </tr>
@@ -85,7 +85,9 @@ const handler = async (event) => {
     const html = `
       <!DOCTYPE html>
       <html>
-      <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"></head>
+      <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="color-scheme" content="only light">
+      <meta name="supported-color-schemes" content="only light"></head>
       <body style="background: #0f0c29; margin: 0; padding: 20px; font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif; color: #fff;">
         <div style="max-width: 480px; margin: 0 auto;">
 
