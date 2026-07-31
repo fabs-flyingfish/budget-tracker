@@ -245,7 +245,7 @@ export default function BudgetApp({ initialMonthsData = {}, onSave, onSaveSettin
     if (!email1 && !email2) { setError("Please add at least one email in Settings."); setActiveTab("settings"); return; }
     setSending(true); setError("");
     try {
-      const res = await fetch('/.netlify/functions/send-budget-email?force=true');
+      const res = await fetch(`/.netlify/functions/send-budget-email?force=true&monthKey=${activeMonthKey}`);
       if (!res.ok) throw new Error('Send failed');
       setSent(true); setTimeout(() => setSent(false), 4000);
     } catch {
