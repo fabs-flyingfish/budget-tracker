@@ -132,7 +132,7 @@ const handler = async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from: 'Home Budget <budget@yourdomain.com>',
+       from: 'Home Budget <onboarding@resend.dev>',
         to: emails,
         subject: `💰 ${monthLabel} Budget — £${each} each`,
         html,
