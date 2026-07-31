@@ -34,14 +34,20 @@ export default function App() {
     if (!supabase) return
     await supabase
       .from('budgets')
-      .upsert({ user_id: USER_ID, months_data: monthsData, updated_at: new Date().toISOString() })
+      .upsert(
+        { user_id: USER_ID, months_data: monthsData, updated_at: new Date().toISOString() },
+        { onConflict: 'user_id' }
+      )
   }
 
   const handleSaveSettings = async (settings) => {
     if (!supabase) return
     await supabase
       .from('budgets')
-      .upsert({ user_id: USER_ID, settings, updated_at: new Date().toISOString() })
+      .upsert(
+        { user_id: USER_ID, settings, updated_at: new Date().toISOString() },
+        { onConflict: 'user_id' }
+      )
   }
 
   if (loading) {
