@@ -33,6 +33,7 @@ const handler = async (event) => {
     const todayDate = now.getDate()
 
     const forceSend = event.queryStringParameters?.force === 'true'
+    const requestedMonthKey = event.queryStringParameters?.monthKey
 
     if (!forceSend && todayDate !== effectiveSendDay) {
       console.log(`Today is the ${todayDate}th — effective send day is the ${effectiveSendDay}th (user chose ${sendDay}, month has ${lastDayOfMonth} days). Skipping.`)
@@ -42,9 +43,10 @@ const handler = async (event) => {
     console.log(`Sending budget email — today is the ${todayDate}th, send day is the ${effectiveSendDay}th`)
 
     // 2. Find current month's data
-    const monthKey = `${now.getFullYear()}-${now.getMonth()}`
+    const monthKey = requestedMonthKey || `${now.getFullYear()}-${now.getMonth()}`
     const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December']
-    const monthLabel = `${monthNames[now.getMonth()]} ${now.getFullYear()}`
+    const [labelYear, labelMonthIndex] = monthKey.split('-').map(Number)
+    const monthLabel = `${monthNames[labelMonthIndex]} ${labelYear}`
 
     const monthData = data.months_data[monthKey]
     if (!monthData) {
