@@ -5,7 +5,7 @@ const { createClient } = require('@supabase/supabase-js')
 
 const USER_ID = 'fabs'
 
-const handler = async () => {
+const handler = async (event) => {
   try {
     // 1. Fetch current month's budget data from Supabase
     const supabase = createClient(
@@ -32,7 +32,9 @@ const handler = async () => {
     const effectiveSendDay = Math.min(sendDay, lastDayOfMonth)
     const todayDate = now.getDate()
 
-    if (todayDate !== effectiveSendDay) {
+    const forceSend = event.queryStringParameters?.force === 'true'
+
+    if (!forceSend && todayDate !== effectiveSendDay) {
       console.log(`Today is the ${todayDate}th — effective send day is the ${effectiveSendDay}th (user chose ${sendDay}, month has ${lastDayOfMonth} days). Skipping.`)
       return { statusCode: 200, body: 'Not send day yet' }
     }
