@@ -245,9 +245,12 @@ export default function BudgetApp({ initialMonthsData = {}, onSave, onSaveSettin
     if (!email1 && !email2) { setError("Please add at least one email in Settings."); setActiveTab("settings"); return; }
     setSending(true); setError("");
     try {
-      await new Promise(r => setTimeout(r, 1500));
+      const res = await fetch('/.netlify/functions/send-budget-email?force=true');
+      if (!res.ok) throw new Error('Send failed');
       setSent(true); setTimeout(() => setSent(false), 4000);
-    } catch { setError("Failed to send. Please try again."); }
+    } catch {
+      setError("Failed to send. Please try again.");
+    }
     setSending(false);
   };
 
@@ -722,7 +725,7 @@ export default function BudgetApp({ initialMonthsData = {}, onSave, onSaveSettin
                 📅 The budget email will automatically send to both addresses on the <strong style={{ color: "#a78bfa" }}>{sendDay}{sendDay === 1 ? 'st' : sendDay === 2 ? 'nd' : sendDay === 3 ? 'rd' : 'th'} of every month</strong>.
               </p>
             </div>
-            <button onClick={() => { setSettingsSaved(true); setTimeout(() => setSettingsSaved(false), 2000); }} style={{
+            <button onClick={saveSettings} style={{
               width: "100%",
               background: settingsSaved ? "rgba(52,211,153,0.15)" : "linear-gradient(135deg, #7c3aed, #3b82f6)",
               border: settingsSaved ? "1px solid rgba(52,211,153,0.4)" : "none",
