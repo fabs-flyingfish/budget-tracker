@@ -27,6 +27,7 @@ const handler = async () => {
     // Work out the effective send day for this month
     // If user chose 31 but it's February, fall back to the last day of the month
     const sendDay = data.settings?.sendDay || 28
+    const now = new Date()
     const lastDayOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate()
     const effectiveSendDay = Math.min(sendDay, lastDayOfMonth)
     const todayDate = now.getDate()
@@ -39,7 +40,6 @@ const handler = async () => {
     console.log(`Sending budget email — today is the ${todayDate}th, send day is the ${effectiveSendDay}th`)
 
     // 2. Find current month's data
-    const now = new Date()
     const monthKey = `${now.getFullYear()}-${now.getMonth()}`
     const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December']
     const monthLabel = `${monthNames[now.getMonth()]} ${now.getFullYear()}`
